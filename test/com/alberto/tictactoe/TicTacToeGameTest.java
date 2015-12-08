@@ -1,5 +1,6 @@
 package com.alberto.tictactoe;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,5 +16,6 @@ public class TicTacToeGameTest {
     @Test
     public void placeSymbol() {
         game.placeSymbol("X");
+        Assert.assertFalse(game.isFinished());
     }
 }
