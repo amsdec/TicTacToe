@@ -10,4 +10,10 @@ public class TicTacToeGameTest {
     public void canPlay() {
         TicTacToeGame game = new TicTacToeGame();
     }
+
+    @Test
+    public void placeSymbol() {
+        TicTacToeGame game = new TicTacToeGame();
+        game.placeSymbol("X");
+    }
 }
