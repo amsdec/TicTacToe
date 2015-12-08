@@ -15,7 +15,14 @@ public class TicTacToeGameTest {
 
     @Test
     public void placeSymbol() {
-        game.placeSymbol("X");
+        game.placeSymbol("X", 1, 1);
         Assert.assertFalse(game.isFinished());
+    }
+
+    @Test
+    public void cantPlaceSymbolOnSamePosition() {
+        Assert.assertTrue(game.placeSymbol("X", 1, 1));
+        Assert.assertFalse(game.placeSymbol("O", 1, 1));
+
     }
 }
