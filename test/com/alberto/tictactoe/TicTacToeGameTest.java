@@ -1,19 +1,19 @@
 package com.alberto.tictactoe;
 
+import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by albertomontellano on 07/12/15.
- */
 public class TicTacToeGameTest {
-    @Test
-    public void canPlay() {
-        TicTacToeGame game = new TicTacToeGame();
+
+    private TicTacToeGame game;
+
+    @Before
+    public void setup() {
+        game = new TicTacToeGame();
     }
 
     @Test
     public void placeSymbol() {
-        TicTacToeGame game = new TicTacToeGame();
         game.placeSymbol("X");
     }
 }
