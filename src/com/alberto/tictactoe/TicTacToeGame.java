@@ -2,11 +2,14 @@ package com.alberto.tictactoe;
 
 public class TicTacToeGame {
 
-    AbstractGrid grid = new AbstractGrid();
-    String lastPlacedSymbol = null;
+    private AbstractGrid grid = new AbstractGrid();
+    private FinishedGameEvaluator evaluator = new FinishedGameEvaluator(grid);
+    private String lastPlacedSymbol = null;
+    private String winner;
+    private boolean isFinished;
 
     public boolean placeSymbol(final String symbol, final int row, final int column) {
-        if (!canPlaceSymbol(symbol, row, column))
+        if (!canPlaceSymbol(symbol, row, column) || isFinished)
             return false;
         placeSymbolOnCell(symbol, row, column);
         return true;
@@ -15,6 +18,11 @@ public class TicTacToeGame {
     private void placeSymbolOnCell(String symbol, int row, int column) {
         grid.setSymbol(symbol, row, column);
         lastPlacedSymbol = symbol;
+        if (isFinished()) {
+            isFinished = isFinished();
+            winner = getWinner();
+        }
+
     }
 
     private boolean canPlaceSymbol(String symbol, int row, int column) {
@@ -26,56 +34,11 @@ public class TicTacToeGame {
         return !symbol.equalsIgnoreCase(lastPlacedSymbol);
     }
 
-
     public boolean isFinished() {
-        return doesLastPLacedSymbolWinsByFillingARow() ||
-                doesLastPLacedSymbolWinsByFillingAColumn() ||
-                doesLastPlacedSymbolWinsByFillingADiagonal() ||
-                isTie();
-    }
-
-    private boolean isTie() {
-        return grid.isFull();
-    }
-
-    private boolean doesLastPLacedSymbolWinsByFillingARow() {
-        for (int rowNumber = 0; rowNumber < 3; rowNumber++)
-            if (doesLastPlacedSymbolWinsByFillingTheRow(rowNumber))
-                return true;
-        return false;
-    }
-
-    private boolean doesLastPLacedSymbolWinsByFillingAColumn() {
-        for (int columnNumber = 0; columnNumber < 3; columnNumber++)
-            if (doesLastPlacedSymbolWinsByFillingTheColumn(columnNumber))
-                return true;
-        return false;
-    }
-
-    private boolean doesLastPlacedSymbolWinsByFillingADiagonal() {
-        return ((grid.isCellValueEqualsTo(lastPlacedSymbol, 0, 0) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, 1, 1) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, 2, 2)) ||
-                (grid.isCellValueEqualsTo(lastPlacedSymbol, 0, 2) &&
-                        grid.isCellValueEqualsTo(lastPlacedSymbol, 1, 1) &&
-                        grid.isCellValueEqualsTo(lastPlacedSymbol, 2, 0)));
-    }
-
-    private boolean doesLastPlacedSymbolWinsByFillingTheRow(final int rowNumber) {
-        return (grid.isCellValueEqualsTo(lastPlacedSymbol, rowNumber, 0) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, rowNumber, 1) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, rowNumber, 2));
-    }
-
-    private boolean doesLastPlacedSymbolWinsByFillingTheColumn(final int columnNumber) {
-        return (grid.isCellValueEqualsTo(lastPlacedSymbol, 0, columnNumber) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, 1, columnNumber) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, 2, columnNumber));
+        return evaluator.isFinished(lastPlacedSymbol);
     }
 
     public String getWinner() {
-        if (!isTie())
-            return lastPlacedSymbol;
-        return null;
+        return this.evaluator.getWinner();
     }
 }
