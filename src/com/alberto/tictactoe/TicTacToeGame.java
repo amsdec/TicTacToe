@@ -41,4 +41,5 @@ public class TicTacToeGame {
     public String getWinner() {
         return this.evaluator.getWinner();
     }
+
 }

@@ -111,4 +111,5 @@ public class TicTacToeGameTest {
         Assert.assertTrue(game.isFinished());
         Assert.assertNull(game.getWinner());
     }
+
 }
