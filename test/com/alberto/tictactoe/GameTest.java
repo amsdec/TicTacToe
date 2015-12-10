@@ -6,8 +6,9 @@ import org.junit.Test;
 
 public class GameTest {
     private Game game;
+
     @Before
-    public void setup(){
+    public void setup() {
         game = new Game(new TicTacToeGame());
     }
 
@@ -16,7 +17,7 @@ public class GameTest {
         game.addPlayer(PlayerFactory.getPlayer("X"));
     }
 
-    @Test (expected = PlayerNotAllowedException.class)
+    @Test(expected = PlayerNotAllowedException.class)
     public void addTwoXPlayers() {
         game.addPlayer(PlayerFactory.getPlayer("X"));
         game.addPlayer(PlayerFactory.getPlayer("X"));
@@ -28,7 +29,7 @@ public class GameTest {
         game.addPlayer(PlayerFactory.getPlayer("O"));
     }
 
-    @Test (expected = PlayerNotAllowedException.class)
+    @Test(expected = PlayerNotAllowedException.class)
     public void addTwoOPlayers() {
         game.addPlayer(PlayerFactory.getPlayer("O"));
         game.addPlayer(PlayerFactory.getPlayer("O"));
@@ -71,10 +72,6 @@ public class GameTest {
         Assert.assertTrue(xPlayer.playOn(0, 0));
         Assert.assertTrue(game.isFinished());
         Assert.assertEquals(xPlayer, game.getWinner());
-
-
-
-
 
 
     }

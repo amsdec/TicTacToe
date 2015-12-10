@@ -16,7 +16,7 @@ public class TicTacToeGame {
     }
 
     private void placeSymbolOnCell(String symbol, int row, int column) {
-        grid.setSymbol(symbol, row, column);
+        grid.setSymbol(symbol, new Cell(row, column));
         lastPlacedSymbol = symbol;
         if (isFinished()) {
             isFinished = isFinished();
@@ -27,7 +27,7 @@ public class TicTacToeGame {
 
     private boolean canPlaceSymbol(String symbol, int row, int column) {
         return isSymbolDifferentThanThePrevious(symbol) &&
-                grid.isCellFree(row, column);
+                grid.isCellFree(new Cell(row, column));
     }
 
     private boolean isSymbolDifferentThanThePrevious(final String symbol) {
