@@ -16,4 +16,9 @@ public class Cell {
     public int getColumn() {
         return column;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Cell && (getRow() == ((Cell) obj).getRow() && getColumn() == ((Cell) obj).getColumn());
+    }
 }
