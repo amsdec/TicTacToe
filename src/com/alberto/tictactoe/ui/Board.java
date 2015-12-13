@@ -12,14 +12,12 @@ import java.awt.event.ActionListener;
 
 public class Board extends JPanel {
 
-    private Game game = new Game(new TicTacToeGame());
-    private Player player1 = PlayerFactory.getPlayer("X");
-    private Player player2 = PlayerFactory.getPlayer("O");
-    private JLabel messages = new JLabel("Player 1 turn");
+    private Game game;
+    private Player player1;
+    private Player player2;
+    private JLabel messages;
     private JButton[][] cells = new JButton[3][3];
     private int play = 1;
-    private JPanel buttonPane = new JPanel(new GridLayout(3,3));
-    private JScrollPane listScrollPane = new JScrollPane(messages);
 
     public Board() {
         super(new BorderLayout());
@@ -28,28 +26,59 @@ public class Board extends JPanel {
     }
 
     private void initBoard() {
-        createGrid();
-        add(buttonPane, BorderLayout.PAGE_START);
-        add(listScrollPane, BorderLayout.PAGE_END);
+        add(createGrid(), BorderLayout.PAGE_START);
+        add(createMessagesPanel(), BorderLayout.CENTER);
+        add(createActionPanel(), BorderLayout.PAGE_END);
+    }
+
+    private JScrollPane createMessagesPanel() {
+        messages = new JLabel("We are ready!!!");
+        return new JScrollPane(messages);
+    }
+
+    private JPanel createActionPanel() {
+        JPanel actionsPanel = new JPanel();
+        actionsPanel.add(createNewGameButton());
+        return actionsPanel;
+    }
+
+    private JButton createNewGameButton() {
+        JButton newGame = new JButton("New game");
+        newGame.addActionListener(new newGameListener());
+        return newGame;
     }
 
     private void initGame() {
+        game = new Game(new TicTacToeGame());
+        initPlayers();
+        joinPlayersToGame();
+    }
+
+    private void joinPlayersToGame() {
         game.addPlayer(player1);
         game.addPlayer(player2);
     }
 
-    private void createGrid() {
-        for(int row = 0; row < 3; row++){
-            for(int column = 0; column < 3; column++){
-                addCellToBoard(row, column);
-            }
-        }
+    private void initPlayers() {
+        player1 = PlayerFactory.getPlayer("X");
+        player2 = PlayerFactory.getPlayer("O");
     }
 
-    private void addCellToBoard(int row, int column) {
+    private JPanel createGrid() {
+        JPanel grid = new JPanel(new GridLayout(3,3));
+        addCellsToGrid(grid);
+        return grid;
+    }
+
+    private void addCellsToGrid(JPanel grid) {
+        for(int row = 0; row < 3; row++)
+            for(int column = 0; column < 3; column++)
+                addCellToBoard(row, column, grid);
+    }
+
+    private void addCellToBoard(int row, int column, JPanel grid) {
         cells[row][column] = new JButton();
-        buttonPane.add(cells[row][column]);
-        cells[row][column].setActionCommand(row + "-" + column);
+        grid.add(cells[row][column]);
         cells[row][column].addActionListener(new SelectCellListener(row, column));
     }
 
@@ -65,19 +94,28 @@ public class Board extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             Player player = getPlayer(getPlayerTurn());
-            if(player.playOn(row, column)){
+            play(e, player);
+        }
+
+        private void play(ActionEvent e, Player player) {
+            if(player.playOn(row, column))
                 updateBoard(e, player);
-            } else {
+            else
                 messages.setText("You can't play on this cell!!");
-            }
         }
 
         private void updateBoard(ActionEvent e, Player player) {
             markCell(e, player);
-            play++;
-            messages.setText("Player " + ((getPlayerTurn()) + 1)+ " turn");
             if (game.isFinished())
                 finalizeGame(player);
+            else
+                setNextTurn();
+        }
+
+        private void setNextTurn() {
+            play++;
+            Player player = getPlayer(getPlayerTurn());
+            messages.setText("Player " + player.getSymbol() + " turn");
         }
 
         private void markCell(ActionEvent e, Player player) {
@@ -91,11 +129,9 @@ public class Board extends JPanel {
         }
 
         private void disableCells() {
-            for(int row = 0; row < 3; row++){
-                for(int column = 0; column < 3; column++){
+            for(int row = 0; row < 3; row++)
+                for(int column = 0; column < 3; column++)
                     cells[row][column].setEnabled(false);
-                }
-            }
         }
 
         private int getPlayerTurn() {
@@ -109,12 +145,35 @@ public class Board extends JPanel {
         }
     }
 
+    class newGameListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            restarBoard();
+            initGame();
+        }
+
+        private void restarBoard() {
+            restartGrid();
+            play = 1;
+            messages.setText("We are ready!!!");
+        }
+
+        private void restartGrid() {
+            for(int row = 0; row < 3; row++)
+                for(int column = 0; column < 3; column++)
+                    restartCell(cells[row][column]);
+        }
+
+        private void restartCell(JButton jButton) {
+            jButton.setText("");
+            jButton.setEnabled(true);
+        }
+    }
     public static void main(String [] args) {
         JFrame frame = new JFrame("Tic tac toe");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(100, 100);
         Board board = new Board();
-        board.setSize(100, 100);
         frame.setContentPane(board);
         frame.pack();
         frame.setVisible(true);
