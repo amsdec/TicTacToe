@@ -5,10 +5,13 @@ public class AbstractGrid {
     private String[][] grid = new String[3][3];
     private int filledCells;
 
-    public void setSymbol(final String symbol, Cell cell) {
+    public boolean setSymbol(final String symbol, Cell cell) {
+        if(!isCellFree(cell))
+            return false;
         grid[cell.getRow()][cell.getColumn()] = symbol;
         filledCells++;
         printGrid();
+        return true;
     }
 
     public boolean isCellFree(Cell cell) {
