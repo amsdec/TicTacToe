@@ -65,14 +65,14 @@ public class Board extends JPanel {
     }
 
     private JPanel createGrid() {
-        JPanel grid = new JPanel(new GridLayout(3,3));
+        JPanel grid = new JPanel(new GridLayout(3, 3));
         addCellsToGrid(grid);
         return grid;
     }
 
     private void addCellsToGrid(JPanel grid) {
-        for(int row = 0; row < 3; row++)
-            for(int column = 0; column < 3; column++)
+        for (int row = 0; row < 3; row++)
+            for (int column = 0; column < 3; column++)
                 addCellToBoard(row, column, grid);
     }
 
@@ -88,7 +88,7 @@ public class Board extends JPanel {
 
         public SelectCellListener(int row, int column) {
             this.row = row;
-            this.column =column;
+            this.column = column;
         }
 
         @Override
@@ -98,7 +98,7 @@ public class Board extends JPanel {
         }
 
         private void play(ActionEvent e, Player player) {
-            if(player.playOn(row, column))
+            if (player.playOn(row, column))
                 updateBoard(e, player);
             else
                 messages.setText("You can't play on this cell!!");
@@ -119,7 +119,7 @@ public class Board extends JPanel {
         }
 
         private void markCell(ActionEvent e, Player player) {
-            ((JButton)e.getSource()).setEnabled(false);
+            ((JButton) e.getSource()).setEnabled(false);
             cells[row][column].setText(player.getSymbol());
         }
 
@@ -129,17 +129,17 @@ public class Board extends JPanel {
         }
 
         private void disableCells() {
-            for(int row = 0; row < 3; row++)
-                for(int column = 0; column < 3; column++)
+            for (int row = 0; row < 3; row++)
+                for (int column = 0; column < 3; column++)
                     cells[row][column].setEnabled(false);
         }
 
         private int getPlayerTurn() {
-            return play %2;
+            return play % 2;
         }
 
         private Player getPlayer(int playerTurn) {
-            if(playerTurn == 1)
+            if (playerTurn == 1)
                 return player1;
             return player2;
         }
@@ -160,8 +160,8 @@ public class Board extends JPanel {
         }
 
         private void restartGrid() {
-            for(int row = 0; row < 3; row++)
-                for(int column = 0; column < 3; column++)
+            for (int row = 0; row < 3; row++)
+                for (int column = 0; column < 3; column++)
                     restartCell(cells[row][column]);
         }
 
@@ -170,7 +170,8 @@ public class Board extends JPanel {
             jButton.setEnabled(true);
         }
     }
-    public static void main(String [] args) {
+
+    public static void main(String[] args) {
         JFrame frame = new JFrame("Tic tac toe");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Board board = new Board();

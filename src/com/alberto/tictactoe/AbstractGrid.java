@@ -6,11 +6,10 @@ public class AbstractGrid {
     private int filledCells;
 
     public boolean setSymbol(final String symbol, Cell cell) {
-        if(!isCellFree(cell))
+        if (!isCellFree(cell))
             return false;
         grid[cell.getRow()][cell.getColumn()] = symbol;
         filledCells++;
-        printGrid();
         return true;
     }
 
@@ -22,7 +21,7 @@ public class AbstractGrid {
         return getCellValue(cell) != null && getCellValue(cell).equalsIgnoreCase(symbol);
     }
 
-    private String getCellValue(Cell cell) {
+    public String getCellValue(Cell cell) {
         return grid[cell.getRow()][cell.getColumn()];
     }
 
@@ -34,15 +33,19 @@ public class AbstractGrid {
         return filledCells == 0;
     }
 
-    private void printGrid() {
+    @Override
+    public String toString() {
+        return "------------------------\n" +
+                (grid[0][0] != null ? grid[0][0] : " ") + "|" + (grid[0][1] != null ? grid[0][1] : " ") + "|" + (grid[0][2] != null ? grid[0][2] : " ") + "\n" +
+                "-+-+-\n" +
+                (grid[1][0] != null ? grid[1][0] : " ") + "|" + (grid[1][1] != null ? grid[1][1] : " ") + "|" + (grid[1][2] != null ? grid[1][2] : " ") + "\n" +
+                "-+-+-\n" +
+                (grid[2][0] != null ? grid[2][0] : " ") + "|" + (grid[2][1] != null ? grid[2][1] : " ") + "|" + (grid[2][2] != null ? grid[2][2] : " ") + "\n" +
+                "------------------------";
+    }
 
-        System.out.println("------------------------");
-        System.out.println((grid[0][0] != null ? grid[0][0] : " ") + "|" + (grid[0][1] != null ? grid[0][1] : " ") + "|" + (grid[0][2] != null ? grid[0][2] : " "));
-        System.out.println("-+-+-");
-        System.out.println((grid[1][0] != null ? grid[1][0] : " ") + "|" + (grid[1][1] != null ? grid[1][1] : " ") + "|" + (grid[1][2] != null ? grid[1][2] : " "));
-        System.out.println("-+-+-");
-        System.out.println((grid[2][0] != null ? grid[2][0] : " ") + "|" + (grid[2][1] != null ? grid[2][1] : " ") + "|" + (grid[2][2] != null ? grid[2][2] : " "));
-        System.out.println("------------------------");
+    public String[][] getGrid() {
+        return this.grid;
     }
 
 }

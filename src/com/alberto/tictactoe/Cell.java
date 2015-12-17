@@ -21,4 +21,9 @@ public class Cell {
     public boolean equals(Object obj) {
         return obj != null && obj instanceof Cell && (getRow() == ((Cell) obj).getRow() && getColumn() == ((Cell) obj).getColumn());
     }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + column + ")";
+    }
 }
