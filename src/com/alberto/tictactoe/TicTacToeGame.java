@@ -42,4 +42,7 @@ public class TicTacToeGame {
         return this.evaluator.getWinner();
     }
 
+    public AbstractGrid getGrid() {
+        return grid;
+    }
 }

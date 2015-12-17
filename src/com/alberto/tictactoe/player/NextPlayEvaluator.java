@@ -73,6 +73,9 @@ public class NextPlayEvaluator {
 
     public Cell getBestCellToPlay(String symbol, AbstractGrid grid) {
         List<Cell> emptyCells = getPossibleCellsToPlayFromGrid(grid);
+        List cellWeights = getCellWeights(symbol, grid, emptyCells);
+        if (cellWeights.isEmpty())
+            return null;
         return Collections.max(getCellWeights(symbol, grid, emptyCells)).getCell();
     }
 

@@ -21,7 +21,7 @@ class CellWeight implements Comparable {
 
     @Override
     public int compareTo(Object otherCellWeight) {
-        if(otherCellWeight != null && otherCellWeight instanceof  CellWeight)
+        if (otherCellWeight != null && otherCellWeight instanceof CellWeight)
             return this.getWeight().compareTo(((CellWeight) otherCellWeight).getWeight());
         return 1;
     }

@@ -31,4 +31,8 @@ public class Game {
             return null;
         return PlayerFactory.getPlayer(this.ticTacToeGame.getWinner());
     }
+
+    public AbstractGrid getGrid() {
+        return this.ticTacToeGame.getGrid();
+    }
 }
