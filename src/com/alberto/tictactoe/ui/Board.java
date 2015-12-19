@@ -24,6 +24,15 @@ public class Board extends JPanel {
         initGame();
     }
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Tic tac toe");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Board board = new Board();
+        frame.setContentPane(board);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
     private void initBoard() {
         add(createGrid(), BorderLayout.PAGE_START);
         add(createMessagesPanel(), BorderLayout.CENTER);
@@ -106,7 +115,7 @@ public class Board extends JPanel {
         cells[row][column].setEnabled(false);
         cells[row][column].setText(player.getSymbol());
         if (moveListener != null)
-            this.moveListener.moveMade(this, player);
+            this.moveListener.onMoveMade(this, player);
     }
 
     private void finalizeGame(Player player) {
@@ -135,6 +144,14 @@ public class Board extends JPanel {
 
     public void addMoveListener(MoveListener moveListener) {
         this.moveListener = moveListener;
+    }
+
+    public AbstractGrid getGame() {
+        return game.getGrid();
+    }
+
+    public Player getPlayer2() {
+        return player2;
     }
 
     class SelectCellListener implements ActionListener {
@@ -177,23 +194,6 @@ public class Board extends JPanel {
             jButton.setText("");
             jButton.setEnabled(true);
         }
-    }
-
-    public AbstractGrid getGame() {
-        return game.getGrid();
-    }
-
-    public Player getPlayer2() {
-        return player2;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Tic tac toe");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Board board = new Board();
-        frame.setContentPane(board);
-        frame.pack();
-        frame.setVisible(true);
     }
 
 }

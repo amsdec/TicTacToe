@@ -1,11 +1,10 @@
 package com.alberto.tictactoe;
 
 public class PlayerFactory {
-    private PlayerFactory() {
-    }
-
     private static Player xPlayer;
     private static Player oPlayer;
+    private PlayerFactory() {
+    }
 
     public static Player getPlayer(final String symbol) {
         if (symbol.equalsIgnoreCase("X")) {

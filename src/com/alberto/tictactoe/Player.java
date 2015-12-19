@@ -4,16 +4,16 @@ public class Player {
     private String symbol;
     private TicTacToeGame game;
 
-    public void setGame(final TicTacToeGame game) {
-        this.game = game;
+    public Player(final String symbol) {
+        this.symbol = symbol;
     }
 
     public TicTacToeGame getGame() {
         return game;
     }
 
-    public Player(final String symbol) {
-        this.symbol = symbol;
+    public void setGame(final TicTacToeGame game) {
+        this.game = game;
     }
 
     public String getSymbol() {

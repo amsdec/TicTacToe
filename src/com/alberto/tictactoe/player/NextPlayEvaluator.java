@@ -10,8 +10,10 @@ import java.util.List;
 
 public class NextPlayEvaluator {
 
-    public NextPlayEvaluator() {
-    }
+    private static final int INITIAL_SCORE = 0;
+    private static final int DRAW_SCORE = 0;
+    private static final int OPPONENT_WINS_SCORE = -1;
+    private static final int PLAYER_WINS_SCORE = 1;
 
     public List<Cell> getPossibleCellsToPlayFromGrid(AbstractGrid grid) {
         List<Cell> emptyCells = new ArrayList<Cell>();
@@ -36,7 +38,7 @@ public class NextPlayEvaluator {
     }
 
     public int getScoreForSymbolOnCell(String symbol, Cell cell, AbstractGrid grid) {
-        return getScoreForSymbolOnCell(symbol, symbol, cell, grid, 0);
+        return getScoreForSymbolOnCell(symbol, symbol, cell, grid, INITIAL_SCORE);
     }
 
     public int getScoreForSymbolOnCell(String originalSymbol, String symbol, Cell cell, AbstractGrid grid, int score) {
@@ -54,15 +56,16 @@ public class NextPlayEvaluator {
 
     private int getScoreForFinishedGame(String originalSymbol, int score, FinishedGameEvaluator finishedGameEvaluator) {
         if (finishedGameEvaluator.getWinner() == null)
-            return 0;
-        else return getScoreWhenAPlayerWins(originalSymbol, score, finishedGameEvaluator);
+            return DRAW_SCORE;
+        else
+            return getScoreWhenAPlayerWins(originalSymbol, score, finishedGameEvaluator);
     }
 
     private int getScoreWhenAPlayerWins(String originalSymbol, int score, FinishedGameEvaluator finishedGameEvaluator) {
         if (finishedGameEvaluator.getWinner().equals(originalSymbol))
-            return score + 1;
+            return score + PLAYER_WINS_SCORE;
         else
-            return score - 1;
+            return score + OPPONENT_WINS_SCORE;
     }
 
     private int getScoreForEmptyCells(String originalSymbol, String symbol, int score, AbstractGrid nextGridState) {

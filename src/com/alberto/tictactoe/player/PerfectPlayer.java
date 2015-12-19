@@ -6,22 +6,26 @@ import com.alberto.tictactoe.ui.Board;
 import com.alberto.tictactoe.ui.listeners.MoveListener;
 
 public class PerfectPlayer implements MoveListener {
-    NextPlayEvaluator nextPlayEvaluator = new NextPlayEvaluator();
+
+    private NextPlayEvaluator nextPlayEvaluator;
 
     public PerfectPlayer() {
-    }
-
-    public void playOn(Cell cell) {
+        nextPlayEvaluator = new NextPlayEvaluator();
     }
 
     @Override
-    public void moveMade(Board board, Player player) {
-        if (!player.equals(board.getPlayer2())) {
-            Cell cell = nextPlayEvaluator.getBestCellToPlay("O", board.getGame());
-            System.out.println("Debo de mover en " + cell);
-            if (cell != null) {
-                board.play(board.getPlayer2(), cell.getRow(), cell.getColumn());
-            }
-        }
+    public void onMoveMade(Board board, Player player) {
+        if (isOpponent(board, player))
+            move(board);
+    }
+
+    private void move(Board board) {
+        Cell cell = nextPlayEvaluator.getBestCellToPlay(board.getPlayer2().getSymbol(), board.getGame());
+        if (cell != null)
+            board.play(board.getPlayer2(), cell.getRow(), cell.getColumn());
+    }
+
+    private boolean isOpponent(Board board, Player player) {
+        return !player.equals(board.getPlayer2());
     }
 }
