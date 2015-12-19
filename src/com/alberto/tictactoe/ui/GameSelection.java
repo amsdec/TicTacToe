@@ -1,5 +1,6 @@
 package com.alberto.tictactoe.ui;
 
+import com.alberto.tictactoe.ui.listeners.OneVsCPUActionListener;
 import com.alberto.tictactoe.ui.listeners.OneVsOneActionListener;
 
 import javax.swing.*;
