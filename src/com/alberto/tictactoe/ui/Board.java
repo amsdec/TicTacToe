@@ -2,6 +2,7 @@ package com.alberto.tictactoe.ui;
 
 import com.alberto.tictactoe.*;
 import com.alberto.tictactoe.ui.listeners.MoveListener;
+import com.alberto.tictactoe.ui.listeners.NewGameListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +53,7 @@ public class Board extends JPanel {
 
     private JButton createNewGameButton() {
         JButton newGame = new JButton("New game");
-        newGame.addActionListener(new newGameListener());
+        newGame.addActionListener(new NewGameListener(this));
         return newGame;
     }
 
@@ -170,30 +171,22 @@ public class Board extends JPanel {
         }
     }
 
-    class newGameListener implements ActionListener {
+    public void restartBoard() {
+        restartGrid();
+        play = 1;
+        messages.setText("We are ready!!!");
+        initGame();
+    }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            restarBoard();
-            initGame();
-        }
+    private void restartGrid() {
+        for (int row = 0; row < 3; row++)
+            for (int column = 0; column < 3; column++)
+                restartCell(cells[row][column]);
+    }
 
-        private void restarBoard() {
-            restartGrid();
-            play = 1;
-            messages.setText("We are ready!!!");
-        }
-
-        private void restartGrid() {
-            for (int row = 0; row < 3; row++)
-                for (int column = 0; column < 3; column++)
-                    restartCell(cells[row][column]);
-        }
-
-        private void restartCell(JButton jButton) {
-            jButton.setText("");
-            jButton.setEnabled(true);
-        }
+    private void restartCell(JButton jButton) {
+        jButton.setText("");
+        jButton.setEnabled(true);
     }
 
 }
