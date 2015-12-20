@@ -10,16 +10,28 @@ public class Game {
     }
 
     public void addPlayer(final Player player) {
-        if (player1 == null) {
-            player1 = player;
-            player1.setGame(ticTacToeGame);
-        } else {
-            if (player1.equals(player)) {
-                throw new PlayerNotAllowedException("There is a " + player.getSymbol() + " player yet");
-            }
-            player2 = player;
-            player2.setGame(ticTacToeGame);
+        if (player1 == null)
+            joinPlayerOne(player);
+        else {
+            throwExceptionIfThePlayerIsAlreadyJoined(player);
+            joinPlayerTwo(player);
         }
+    }
+
+    private void throwExceptionIfThePlayerIsAlreadyJoined(Player player) {
+        if (player1.equals(player)) {
+            throw new PlayerNotAllowedException("There is a " + player.getSymbol() + " player yet");
+        }
+    }
+
+    private void joinPlayerTwo(Player player) {
+        player2 = player;
+        player2.setGame(ticTacToeGame);
+    }
+
+    private void joinPlayerOne(Player player) {
+        player1 = player;
+        player1.setGame(ticTacToeGame);
     }
 
     public boolean isFinished() {
@@ -27,9 +39,13 @@ public class Game {
     }
 
     public Player getWinner() {
-        if (this.ticTacToeGame.getWinner() == null)
+        if (isDraw())
             return null;
         return PlayerFactory.getPlayer(this.ticTacToeGame.getWinner());
+    }
+
+    private boolean isDraw() {
+        return this.ticTacToeGame.getWinner() == null;
     }
 
     public AbstractGrid getGrid() {
