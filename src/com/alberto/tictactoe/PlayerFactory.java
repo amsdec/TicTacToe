@@ -3,11 +3,12 @@ package com.alberto.tictactoe;
 public class PlayerFactory {
     private static Player xPlayer;
     private static Player oPlayer;
+
     private PlayerFactory() {
     }
 
     public static Player getPlayer(final String symbol) {
-        if(!isXSymbol(symbol) && !isOSymbol(symbol))
+        if (!isXSymbol(symbol) && !isOSymbol(symbol))
             throw new PlayerNotAllowedException("The symbol " + symbol + " is not allowed");
         return getAllowedPlayer(symbol);
 

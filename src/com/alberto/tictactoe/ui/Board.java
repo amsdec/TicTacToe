@@ -155,22 +155,6 @@ public class Board extends JPanel {
         return player2;
     }
 
-    class SelectCellListener implements ActionListener {
-        private int row;
-        private int column;
-
-        public SelectCellListener(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Player player = getPlayer(getPlayerTurn());
-            play(player, row, column);
-        }
-    }
-
     public void restartBoard() {
         restartGrid();
         play = 1;
@@ -187,6 +171,22 @@ public class Board extends JPanel {
     private void restartCell(JButton jButton) {
         jButton.setText("");
         jButton.setEnabled(true);
+    }
+
+    class SelectCellListener implements ActionListener {
+        private int row;
+        private int column;
+
+        public SelectCellListener(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Player player = getPlayer(getPlayerTurn());
+            play(player, row, column);
+        }
     }
 
 }

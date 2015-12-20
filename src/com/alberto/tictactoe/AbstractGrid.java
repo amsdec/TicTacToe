@@ -1,8 +1,8 @@
 package com.alberto.tictactoe;
 
 public class AbstractGrid {
-    private static final int TOTAL_CELLS = 9;
     public static final String EMPTY_CELL = " ";
+    private static final int TOTAL_CELLS = 9;
     private String[][] grid = new String[3][3];
     private int filledCells;
 
@@ -41,8 +41,8 @@ public class AbstractGrid {
     }
 
     private void buildPrintableGrid(StringBuilder stringForm) {
-        for(int row = 0; row < 3; row++) {
-            for(int column = 0; column < 3; column++) {
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
                 stringForm.append(getPrintableCell(row, column));
                 addDelimiter(stringForm, column, "|");
             }
