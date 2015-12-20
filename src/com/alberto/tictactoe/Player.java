@@ -8,10 +8,6 @@ public class Player {
         this.symbol = symbol;
     }
 
-    public TicTacToeGame getGame() {
-        return game;
-    }
-
     public void setGame(final TicTacToeGame game) {
         this.game = game;
     }
