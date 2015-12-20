@@ -2,7 +2,7 @@ package com.alberto.tictactoe.ui;
 
 import com.alberto.tictactoe.*;
 import com.alberto.tictactoe.ui.listeners.MoveListener;
-import com.alberto.tictactoe.ui.listeners.NewGameListener;
+import com.alberto.tictactoe.ui.listeners.NewGameButtonListener;
 import com.alberto.tictactoe.ui.listeners.SelectCellListener;
 
 import javax.swing.*;
@@ -43,7 +43,7 @@ public class Board extends JPanel {
 
     private JButton createNewGameButton() {
         JButton newGame = new JButton("New game");
-        newGame.addActionListener(new NewGameListener(this));
+        newGame.addActionListener(new NewGameButtonListener(this));
         return newGame;
     }
 
