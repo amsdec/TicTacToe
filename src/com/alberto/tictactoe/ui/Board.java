@@ -3,11 +3,10 @@ package com.alberto.tictactoe.ui;
 import com.alberto.tictactoe.*;
 import com.alberto.tictactoe.ui.listeners.MoveListener;
 import com.alberto.tictactoe.ui.listeners.NewGameListener;
+import com.alberto.tictactoe.ui.listeners.SelectCellListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Board extends JPanel {
 
@@ -23,15 +22,6 @@ public class Board extends JPanel {
         super(new BorderLayout());
         initBoard();
         initGame();
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Tic tac toe");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Board board = new Board();
-        frame.setContentPane(board);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     private void initBoard() {
@@ -88,10 +78,11 @@ public class Board extends JPanel {
     private void addCellToBoard(int row, int column, JPanel grid) {
         cells[row][column] = new JButton();
         grid.add(cells[row][column]);
-        cells[row][column].addActionListener(new SelectCellListener(row, column));
+        cells[row][column].addActionListener(new SelectCellListener(this, row, column));
     }
 
-    public void play(Player player, int row, int column) {
+    public void play(int row, int column) {
+        Player player = getPlayer();
         if (player.playOn(row, column))
             updateBoard(player, row, column);
         else
@@ -108,15 +99,15 @@ public class Board extends JPanel {
 
     private void setNextTurn() {
         play++;
-        Player player = getPlayer(getPlayerTurn());
+        Player player = getPlayer();
         messages.setText("Player " + player.getSymbol() + " turn");
+        if (moveListener != null)
+            this.moveListener.onMoveMade(this, player);
     }
 
     private void markCell(Player player, int row, int column) {
         cells[row][column].setEnabled(false);
         cells[row][column].setText(player.getSymbol());
-        if (moveListener != null)
-            this.moveListener.onMoveMade(this, player);
     }
 
     private void finalizeGame(Player player) {
@@ -137,7 +128,8 @@ public class Board extends JPanel {
         return play % 2;
     }
 
-    private Player getPlayer(int playerTurn) {
+    private Player getPlayer() {
+        int playerTurn = getPlayerTurn();
         if (playerTurn == 1)
             return player1;
         return player2;
@@ -173,20 +165,5 @@ public class Board extends JPanel {
         jButton.setEnabled(true);
     }
 
-    class SelectCellListener implements ActionListener {
-        private int row;
-        private int column;
-
-        public SelectCellListener(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Player player = getPlayer(getPlayerTurn());
-            play(player, row, column);
-        }
-    }
 
 }
