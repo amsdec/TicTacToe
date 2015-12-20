@@ -18,8 +18,24 @@ public class Cell {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj != null && obj instanceof Cell && (getRow() == ((Cell) obj).getRow() && getColumn() == ((Cell) obj).getColumn());
+    public boolean equals(Object otherCell) {
+        return canCompare(otherCell) && isSamePositionOnGrid((Cell) otherCell);
+    }
+
+    private boolean isSamePositionOnGrid(Cell otherCell) {
+        return isaRowValueEquals(otherCell) && isColumnValueEquals(otherCell);
+    }
+
+    private boolean isColumnValueEquals(Cell otherCell) {
+        return getColumn() == otherCell.getColumn();
+    }
+
+    private boolean isaRowValueEquals(Cell otherCell) {
+        return getRow() == otherCell.getRow();
+    }
+
+    private boolean canCompare(Object otherCell) {
+        return otherCell != null && otherCell instanceof Cell;
     }
 
     @Override

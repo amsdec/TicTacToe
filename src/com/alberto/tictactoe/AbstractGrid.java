@@ -2,6 +2,7 @@ package com.alberto.tictactoe;
 
 public class AbstractGrid {
     private static final int TOTAL_CELLS = 9;
+    public static final String EMPTY_CELL = " ";
     private String[][] grid = new String[3][3];
     private int filledCells;
 
@@ -35,13 +36,32 @@ public class AbstractGrid {
 
     @Override
     public String toString() {
-        return "------------------------\n" +
-                (grid[0][0] != null ? grid[0][0] : " ") + "|" + (grid[0][1] != null ? grid[0][1] : " ") + "|" + (grid[0][2] != null ? grid[0][2] : " ") + "\n" +
-                "-+-+-\n" +
-                (grid[1][0] != null ? grid[1][0] : " ") + "|" + (grid[1][1] != null ? grid[1][1] : " ") + "|" + (grid[1][2] != null ? grid[1][2] : " ") + "\n" +
-                "-+-+-\n" +
-                (grid[2][0] != null ? grid[2][0] : " ") + "|" + (grid[2][1] != null ? grid[2][1] : " ") + "|" + (grid[2][2] != null ? grid[2][2] : " ") + "\n" +
-                "------------------------";
+        StringBuilder stringForm = new StringBuilder();
+        stringForm.append("------------------------");
+        stringForm.append("\n");
+        buildPrintableGrid(stringForm);
+        stringForm.append("------------------------");
+        return stringForm.toString();
+    }
+
+    private void buildPrintableGrid(StringBuilder stringForm) {
+        for(int row = 0; row < 3; row++) {
+            for(int column = 0; column < 3; column++) {
+                stringForm.append(getPrintableCell(row, column));
+                addDelimiter(stringForm, column, "|");
+            }
+            addDelimiter(stringForm, row, "-+-+-");
+            stringForm.append("\n");
+        }
+    }
+
+    private void addDelimiter(StringBuilder stringForm, int index, String delimiter) {
+        if (index < 2)
+            stringForm.append(delimiter);
+    }
+
+    private String getPrintableCell(int row, int column) {
+        return getCellValue(new Cell(row, column)) != null ? getCellValue(new Cell(row, column)) : EMPTY_CELL;
     }
 
     public String[][] getGrid() {
