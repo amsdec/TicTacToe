@@ -15,7 +15,7 @@ public class PerfectPlayer implements MoveListener {
 
     @Override
     public void onMoveMade(Board board, Player player) {
-        if (isMyTurn(board, player))
+        if (isItMyTurn(board, player))
             move(board);
     }
 
@@ -25,7 +25,7 @@ public class PerfectPlayer implements MoveListener {
             board.play(cell.getRow(), cell.getColumn());
     }
 
-    private boolean isMyTurn(Board board, Player player) {
+    private boolean isItMyTurn(Board board, Player player) {
         return player.equals(board.getPlayer2());
     }
 }
