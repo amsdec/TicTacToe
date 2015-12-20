@@ -44,7 +44,7 @@ public class NextPlayEvaluatorTest {
     @Test
     public void getGridStateAfterMove() {
         AbstractGrid nextGrid = nextPlayEvaluator.getNextGridState(grid, new Cell(1, 1), "X");
-        Assert.assertTrue(nextGrid.isCellValueEqualsTo("X", new Cell(1, 1)));
+        Assert.assertEquals("X", nextGrid.getCellValue(new Cell(1, 1)));
         Assert.assertTrue(nextGrid.isCellFree(new Cell(0, 0)));
         Assert.assertTrue(nextGrid.isCellFree(new Cell(0, 1)));
         Assert.assertTrue(nextGrid.isCellFree(new Cell(0, 2)));

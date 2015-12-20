@@ -7,7 +7,7 @@ public class PlayerFactory {
     }
 
     public static Player getPlayer(final String symbol) {
-        if(!isXSymbol(symbol) || !isOSymbol(symbol))
+        if(!isXSymbol(symbol) && !isOSymbol(symbol))
             throw new PlayerNotAllowedException("The symbol " + symbol + " is not allowed");
         return getAllowedPlayer(symbol);
 

@@ -18,10 +18,6 @@ public class AbstractGrid {
         return getCellValue(cell) == null;
     }
 
-    public boolean isCellValueEqualsTo(final String symbol, Cell cell) {
-        return getCellValue(cell) != null && getCellValue(cell).equalsIgnoreCase(symbol);
-    }
-
     public String getCellValue(Cell cell) {
         return grid[cell.getRow()][cell.getColumn()];
     }

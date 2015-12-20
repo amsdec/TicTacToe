@@ -48,7 +48,7 @@ public class NextPlayEvaluator {
     }
 
     private int getScore(String originalSymbol, String symbol, int score, AbstractGrid nextGridState, FinishedGameEvaluator finishedGameEvaluator) {
-        if (finishedGameEvaluator.isFinished(symbol))
+        if (finishedGameEvaluator.isFinished())
             return getScoreForFinishedGame(originalSymbol, score, finishedGameEvaluator);
         else
             return getScoreForEmptyCells(originalSymbol, symbol, score, nextGridState);

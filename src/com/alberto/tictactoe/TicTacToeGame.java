@@ -35,7 +35,7 @@ public class TicTacToeGame {
     }
 
     public boolean isFinished() {
-        return evaluator.isFinished(lastPlacedSymbol);
+        return evaluator.isFinished();
     }
 
     public String getWinner() {

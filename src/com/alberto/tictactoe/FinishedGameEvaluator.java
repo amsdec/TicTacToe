@@ -10,58 +10,58 @@ public class FinishedGameEvaluator {
         this.grid = grid;
     }
 
-    public boolean isFinished(final String lastPlacedSymbol) {
-        return doesLastPLacedSymbolWinsByFillingARow(lastPlacedSymbol) ||
-                doesLastPLacedSymbolWinsByFillingAColumn(lastPlacedSymbol) ||
-                doesLastPlacedSymbolWinsByFillingADiagonal(lastPlacedSymbol) ||
-                isTie();
+    public boolean isFinished() {
+        return isThereAWinner() || isTie();
+    }
+
+    private boolean isThereAWinner() {
+        return isThereAWinnerByFillingARow() ||
+                isThereAWinnerByFillingAColumn() ||
+                isThereAWinnerByFillingADiagonal();
     }
 
     private boolean isTie() {
         return grid.isFull();
     }
 
-    private boolean doesLastPLacedSymbolWinsByFillingARow(final String lastPlacedSymbol) {
+    private boolean isThereAWinnerByFillingARow() {
         for (int rowNumber = 0; rowNumber < 3; rowNumber++)
-            if (doesLastPlacedSymbolWinsByFillingTheRow(rowNumber, lastPlacedSymbol)) {
-                winner = lastPlacedSymbol;
+            if (isThereAWinnerByByFillingTheRow(rowNumber)) {
+                winner = grid.getCellValue(new Cell(rowNumber, 0));
                 return true;
             }
         return false;
     }
 
-    private boolean doesLastPLacedSymbolWinsByFillingAColumn(final String lastPlacedSymbol) {
+    private boolean isThereAWinnerByFillingAColumn() {
         for (int columnNumber = 0; columnNumber < 3; columnNumber++)
-            if (doesLastPlacedSymbolWinsByFillingTheColumn(columnNumber, lastPlacedSymbol)) {
-                winner = lastPlacedSymbol;
+            if (isThereAWinnerByFillingTheColumn(columnNumber)) {
+                winner = grid.getCellValue(new Cell(0, columnNumber));
                 return true;
             }
         return false;
     }
 
-    private boolean doesLastPlacedSymbolWinsByFillingADiagonal(final String lastPlacedSymbol) {
-        if ((grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(0, 0)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(1, 1)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(2, 2))) ||
-                (grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(0, 2)) &&
-                        grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(1, 1)) &&
-                        grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(2, 0)))) {
-            winner = lastPlacedSymbol;
+    private boolean isThereAWinnerByFillingADiagonal() {
+        if ((isSameValueOnCells(new Cell(0, 0), new Cell(1, 1), new Cell(2, 2))) ||
+                isSameValueOnCells(new Cell(0, 2), new Cell(1, 1), new Cell(2, 0))) {
+            winner = grid.getCellValue(new Cell(1, 1));
             return true;
         }
         return false;
     }
 
-    private boolean doesLastPlacedSymbolWinsByFillingTheRow(final int rowNumber, final String lastPlacedSymbol) {
-        return (grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(rowNumber, 0)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(rowNumber, 1)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(rowNumber, 2)));
+    private boolean isThereAWinnerByByFillingTheRow(final int rowNumber) {
+        return isSameValueOnCells(new Cell(rowNumber, 0), new Cell(rowNumber, 1), new Cell(rowNumber, 2));
     }
 
-    private boolean doesLastPlacedSymbolWinsByFillingTheColumn(final int columnNumber, final String lastPlacedSymbol) {
-        return (grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(0, columnNumber)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(1, columnNumber)) &&
-                grid.isCellValueEqualsTo(lastPlacedSymbol, new Cell(2, columnNumber)));
+    private boolean isThereAWinnerByFillingTheColumn(final int columnNumber) {
+        return isSameValueOnCells(new Cell(0, columnNumber), new Cell(1, columnNumber), new Cell(2, columnNumber));
+    }
+
+    private boolean isSameValueOnCells(Cell cellOne, Cell cellTwo, Cell cellThree) {
+        return grid.getCellValue(cellOne) != null && grid.getCellValue(cellTwo) != null && grid.getCellValue(cellThree) != null &&
+                grid.getCellValue(cellOne).equals(grid.getCellValue(cellTwo)) && grid.getCellValue(cellTwo).equals(grid.getCellValue(cellThree));
     }
 
     public String getWinner() {
