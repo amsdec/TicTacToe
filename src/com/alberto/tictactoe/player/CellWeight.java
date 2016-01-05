@@ -2,13 +2,21 @@ package com.alberto.tictactoe.player;
 
 import com.alberto.tictactoe.Cell;
 
-class CellWeight implements Comparable {
+public class CellWeight implements Comparable {
     private Cell cell;
     private Integer weight;
+
+    private String symbol;
 
     public CellWeight(Cell cell, Integer weight) {
         this.cell = cell;
         this.weight = weight;
+    }
+
+    public CellWeight(Cell cell, Integer weight, String symbol) {
+        this.cell = cell;
+        this.weight = weight;
+        this.symbol = symbol;
     }
 
     public Cell getCell() {
@@ -17,6 +25,10 @@ class CellWeight implements Comparable {
 
     public Integer getWeight() {
         return weight;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override
@@ -28,5 +40,10 @@ class CellWeight implements Comparable {
 
     private boolean canCompareWIth(Object otherCellWeight) {
         return otherCellWeight != null && otherCellWeight instanceof CellWeight;
+    }
+
+    @Override
+    public String toString() {
+        return symbol + " en " + cell + " = " + weight;
     }
 }

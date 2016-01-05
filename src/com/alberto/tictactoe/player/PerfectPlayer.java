@@ -7,10 +7,10 @@ import com.alberto.tictactoe.ui.listeners.MoveListener;
 
 public class PerfectPlayer implements MoveListener {
 
-    private NextPlayEvaluator nextPlayEvaluator;
+    private NextPlayEvaluator badStrategy;
 
     public PerfectPlayer() {
-        nextPlayEvaluator = new NextPlayEvaluator();
+        badStrategy = new MinimaxStrategy();
     }
 
     @Override
@@ -20,7 +20,7 @@ public class PerfectPlayer implements MoveListener {
     }
 
     private void move(Board board) {
-        Cell cell = nextPlayEvaluator.getBestCellToPlay(board.getPlayer2().getSymbol(), board.getGame());
+        Cell cell = badStrategy.getBestCellToPlay(board.getPlayer2().getSymbol(), board.getGame());
         if (cell != null)
             board.play(cell.getRow(), cell.getColumn());
     }

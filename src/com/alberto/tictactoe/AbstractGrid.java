@@ -1,5 +1,8 @@
 package com.alberto.tictactoe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AbstractGrid {
     public static final String EMPTY_CELL = " ";
     private static final int TOTAL_CELLS = 9;
@@ -23,7 +26,7 @@ public class AbstractGrid {
     }
 
     public boolean isFull() {
-        return filledCells == TOTAL_CELLS;
+        return filledCells >= TOTAL_CELLS;
     }
 
     public boolean isEmpty() {
@@ -33,10 +36,7 @@ public class AbstractGrid {
     @Override
     public String toString() {
         StringBuilder stringForm = new StringBuilder();
-        stringForm.append("------------------------");
-        stringForm.append("\n");
         buildPrintableGrid(stringForm);
-        stringForm.append("------------------------");
         return stringForm.toString();
     }
 
@@ -44,9 +44,10 @@ public class AbstractGrid {
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 3; column++) {
                 stringForm.append(getPrintableCell(row, column));
-                addDelimiter(stringForm, column, "|");
+                addDelimiter(stringForm, column, " | ");
             }
-            addDelimiter(stringForm, row, "-+-+-");
+            stringForm.append("\n");
+            addDelimiter(stringForm, row, "--+---+---");
             stringForm.append("\n");
         }
     }

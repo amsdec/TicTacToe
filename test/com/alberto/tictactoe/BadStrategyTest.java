@@ -1,34 +1,34 @@
 package com.alberto.tictactoe;
 
-import com.alberto.tictactoe.player.NextPlayEvaluator;
+import com.alberto.tictactoe.player.BadStrategy;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-public class NextPlayEvaluatorTest {
+public class BadStrategyTest {
 
 
     private AbstractGrid grid;
-    private NextPlayEvaluator nextPlayEvaluator;
+    private BadStrategy badStrategy;
 
     @Before
     public void setUp() throws Exception {
         grid = new AbstractGrid();
-        nextPlayEvaluator = new NextPlayEvaluator();
+        badStrategy = new BadStrategy();
     }
 
     @Test
     public void getPossibleCellsToPlayOnFilledGridMustReturnAnEmptyListOfCells() {
         fillGrid();
-        assertListSize(0, nextPlayEvaluator.getPossibleCellsToPlayFromGrid(grid));
+        assertListSize(0, badStrategy.getPossibleCellsToPlayFromGrid(grid));
     }
 
 
     @Test
     public void getPossibleCellsToPlayOnEmptyGridMustReturnAListOfAllCells() {
-        List<Cell> possibleCellsToPlayFromGrid = nextPlayEvaluator.getPossibleCellsToPlayFromGrid(grid);
+        List<Cell> possibleCellsToPlayFromGrid = badStrategy.getPossibleCellsToPlayFromGrid(grid);
         assertListSize(9, possibleCellsToPlayFromGrid);
         Assert.assertEquals(new Cell(0, 0), possibleCellsToPlayFromGrid.get(0));
         Assert.assertEquals(new Cell(0, 1), possibleCellsToPlayFromGrid.get(1));
@@ -43,7 +43,7 @@ public class NextPlayEvaluatorTest {
 
     @Test
     public void getGridStateAfterMove() {
-        AbstractGrid nextGrid = nextPlayEvaluator.getNextGridState(grid, new Cell(1, 1), "X");
+        AbstractGrid nextGrid = badStrategy.getNextGridState(grid, new Cell(1, 1), "X");
         Assert.assertEquals("X", nextGrid.getCellValue(new Cell(1, 1)));
         Assert.assertTrue(nextGrid.isCellFree(new Cell(0, 0)));
         Assert.assertTrue(nextGrid.isCellFree(new Cell(0, 1)));
@@ -66,7 +66,7 @@ public class NextPlayEvaluatorTest {
         grid.setSymbol("X", new Cell(1, 2));
         grid.setSymbol("X", new Cell(2, 0));
         grid.setSymbol("O", new Cell(2, 1));
-        Assert.assertEquals(0, nextPlayEvaluator.getScoreForSymbolOnCell("X", new Cell(2, 2), grid));
+        Assert.assertEquals(0, badStrategy.getScoreForSymbolOnCell("X", new Cell(2, 2), grid));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class NextPlayEvaluatorTest {
         grid.setSymbol("O", new Cell(1, 2));
         grid.setSymbol("X", new Cell(2, 0));
         grid.setSymbol("X", new Cell(2, 1));
-        Assert.assertEquals(1, nextPlayEvaluator.getScoreForSymbolOnCell("X", new Cell(2, 2), grid));
+        Assert.assertEquals(1, badStrategy.getScoreForSymbolOnCell("X", new Cell(2, 2), grid));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class NextPlayEvaluatorTest {
         grid.setSymbol("X", new Cell(1, 0));
         grid.setSymbol("X", new Cell(1, 1));
         grid.setSymbol("O", new Cell(2, 0));
-        Assert.assertEquals(2, nextPlayEvaluator.getScoreForSymbolOnCell("X", new Cell(2, 1), grid));
+        Assert.assertEquals(2, badStrategy.getScoreForSymbolOnCell("X", new Cell(2, 1), grid));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class NextPlayEvaluatorTest {
         grid.setSymbol("X", new Cell(1, 0));
         grid.setSymbol("X", new Cell(1, 1));
         grid.setSymbol("O", new Cell(1, 2));
-        Assert.assertEquals(0, nextPlayEvaluator.getScoreForSymbolOnCell("X", new Cell(2, 1), grid));
+        Assert.assertEquals(0, badStrategy.getScoreForSymbolOnCell("X", new Cell(2, 1), grid));
     }
 
     @Test
@@ -112,18 +112,18 @@ public class NextPlayEvaluatorTest {
         grid.setSymbol("X", new Cell(1, 0));
         grid.setSymbol("X", new Cell(1, 1));
         grid.setSymbol("O", new Cell(1, 2));
-        Assert.assertEquals(new Cell(2, 0), nextPlayEvaluator.getBestCellToPlay("X", grid));
+        Assert.assertEquals(new Cell(2, 0), badStrategy.getBestCellToPlay("X", grid));
     }
 
     @Test
     public void getBestCellToPlayOnEmptyGrid() {
-        Assert.assertEquals(new Cell(1, 1), nextPlayEvaluator.getBestCellToPlay("X", grid));
+        Assert.assertEquals(new Cell(1, 1), badStrategy.getBestCellToPlay("X", grid));
     }
 
     @Test
     public void getBestCellToPlayOnSecondPlayerFirstTurn() {
         grid.setSymbol("X", new Cell(1, 1));
-        Assert.assertEquals(new Cell(0, 0), nextPlayEvaluator.getBestCellToPlay("O", grid));
+        Assert.assertEquals(new Cell(0, 0), badStrategy.getBestCellToPlay("O", grid));
     }
 
     private void assertListSize(int expectedSize, List<Cell> possibleCellsToPlayFromGrid) {
