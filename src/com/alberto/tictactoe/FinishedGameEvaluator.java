@@ -59,7 +59,7 @@ public class FinishedGameEvaluator {
         return isSameValueOnCells(new Cell(0, columnNumber), new Cell(1, columnNumber), new Cell(2, columnNumber));
     }
 
-    private boolean isSameValueOnCells(Cell cellOne, Cell cellTwo, Cell cellThree) {
+    private boolean isSameValueOnCells(final Cell cellOne, final Cell cellTwo, final Cell cellThree) {
         return grid.getCellValue(cellOne) != null && grid.getCellValue(cellTwo) != null && grid.getCellValue(cellThree) != null &&
                 grid.getCellValue(cellOne).equals(grid.getCellValue(cellTwo)) && grid.getCellValue(cellTwo).equals(grid.getCellValue(cellThree));
     }

@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class OneVsCPUActionListener implements ActionListener {
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         closeMenu(e);
         initAndShowBoard();
 
@@ -19,7 +19,7 @@ public class OneVsCPUActionListener implements ActionListener {
         showBoard(initBoard());
     }
 
-    private void showBoard(Board board) {
+    private void showBoard(final Board board) {
         JFrame frame = new JFrame("Tic tac toe");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(board);
@@ -34,7 +34,7 @@ public class OneVsCPUActionListener implements ActionListener {
         return board;
     }
 
-    private void closeMenu(ActionEvent e) {
+    private void closeMenu(final ActionEvent e) {
         ((JFrame) ((JButton) e.getSource()).getRootPane().getParent()).dispose();
     }
 

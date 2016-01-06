@@ -7,25 +7,25 @@ import com.alberto.tictactoe.ui.listeners.MoveListener;
 
 public class PerfectPlayer implements MoveListener {
 
-    private NextPlayEvaluator badStrategy;
+    private NextPlayEvaluator nextPlayStrategy;
 
     public PerfectPlayer() {
-        badStrategy = new MinimaxStrategy();
+        nextPlayStrategy = new MinimaxStrategy();
     }
 
     @Override
-    public void onMoveMade(Board board, Player player) {
+    public void onMoveMade(final Board board, final Player player) {
         if (isItMyTurn(board, player))
             move(board);
     }
 
-    private void move(Board board) {
-        Cell cell = badStrategy.getBestCellToPlay(board.getPlayer2().getSymbol(), board.getGame());
+    private void move(final Board board) {
+        Cell cell = nextPlayStrategy.getBestCellToPlay(board.getPlayer2().getSymbol(), board.getGame());
         if (cell != null)
             board.play(cell.getRow(), cell.getColumn());
     }
 
-    private boolean isItMyTurn(Board board, Player player) {
+    private boolean isItMyTurn(final Board board, final Player player) {
         return player.equals(board.getPlayer2());
     }
 }

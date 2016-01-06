@@ -18,18 +18,18 @@ public class Game {
         }
     }
 
-    private void throwExceptionIfThePlayerIsAlreadyJoined(Player player) {
+    private void throwExceptionIfThePlayerIsAlreadyJoined(final Player player) {
         if (player1.equals(player)) {
             throw new PlayerNotAllowedException("There is a " + player.getSymbol() + " player yet");
         }
     }
 
-    private void joinPlayerTwo(Player player) {
+    private void joinPlayerTwo(final Player player) {
         player2 = player;
         player2.setGame(ticTacToeGame);
     }
 
-    private void joinPlayerOne(Player player) {
+    private void joinPlayerOne(final Player player) {
         player1 = player;
         player1.setGame(ticTacToeGame);
     }

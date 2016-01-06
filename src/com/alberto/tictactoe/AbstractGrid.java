@@ -1,36 +1,31 @@
 package com.alberto.tictactoe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AbstractGrid {
     public static final String EMPTY_CELL = " ";
     private static final int TOTAL_CELLS = 9;
     private String[][] grid = new String[3][3];
     private int filledCells;
 
-    public boolean setSymbol(final String symbol, Cell cell) {
-        if (!isCellFree(cell))
-            return false;
+    public boolean setSymbol(final String symbol, final Cell cell) {
+        return isCellFree(cell) && setSymbolOnCell(symbol, cell);
+    }
+
+    private boolean setSymbolOnCell(final String symbol, final Cell cell) {
         grid[cell.getRow()][cell.getColumn()] = symbol;
         filledCells++;
         return true;
     }
 
-    public boolean isCellFree(Cell cell) {
+    public boolean isCellFree(final Cell cell) {
         return getCellValue(cell) == null;
     }
 
-    public String getCellValue(Cell cell) {
+    public String getCellValue(final Cell cell) {
         return grid[cell.getRow()][cell.getColumn()];
     }
 
     public boolean isFull() {
         return filledCells >= TOTAL_CELLS;
-    }
-
-    public boolean isEmpty() {
-        return filledCells == 0;
     }
 
     @Override
@@ -40,29 +35,33 @@ public class AbstractGrid {
         return stringForm.toString();
     }
 
-    private void buildPrintableGrid(StringBuilder stringForm) {
+    private void buildPrintableGrid(final StringBuilder stringForm) {
         for (int row = 0; row < 3; row++) {
-            for (int column = 0; column < 3; column++) {
-                stringForm.append(getPrintableCell(row, column));
-                addDelimiter(stringForm, column, " | ");
-            }
-            stringForm.append("\n");
-            addDelimiter(stringForm, row, "--+---+---");
-            stringForm.append("\n");
+            addPrintableRow(stringForm, row);
+            addRowSeparator(stringForm, row);
         }
     }
 
-    private void addDelimiter(StringBuilder stringForm, int index, String delimiter) {
+    private void addRowSeparator(final StringBuilder stringForm, final int row) {
+        stringForm.append("\n");
+        addDelimiter(stringForm, row, "--+---+---");
+        stringForm.append("\n");
+    }
+
+    private void addPrintableRow(final StringBuilder stringForm, final int row) {
+        for (int column = 0; column < 3; column++) {
+            stringForm.append(getPrintableCell(row, column));
+            addDelimiter(stringForm, column, " | ");
+        }
+    }
+
+    private void addDelimiter(final StringBuilder stringForm, final int index, final String delimiter) {
         if (index < 2)
             stringForm.append(delimiter);
     }
 
-    private String getPrintableCell(int row, int column) {
+    private String getPrintableCell(final int row, final int column) {
         return getCellValue(new Cell(row, column)) != null ? getCellValue(new Cell(row, column)) : EMPTY_CELL;
-    }
-
-    public String[][] getGrid() {
-        return this.grid;
     }
 
 }

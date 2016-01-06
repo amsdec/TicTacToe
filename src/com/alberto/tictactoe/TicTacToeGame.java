@@ -15,17 +15,21 @@ public class TicTacToeGame {
         return true;
     }
 
-    private void placeSymbolOnCell(String symbol, int row, int column) {
+    private void placeSymbolOnCell(final String symbol, final int row, final int column) {
         grid.setSymbol(symbol, new Cell(row, column));
         lastPlacedSymbol = symbol;
+        setWinnerIfFinished();
+
+    }
+
+    private void setWinnerIfFinished() {
         if (isFinished()) {
             isFinished = isFinished();
             winner = getWinner();
         }
-
     }
 
-    private boolean canPlaceSymbol(String symbol, int row, int column) {
+    private boolean canPlaceSymbol(final String symbol, final int row, final int column) {
         return isSymbolDifferentThanThePrevious(symbol) &&
                 grid.isCellFree(new Cell(row, column));
     }

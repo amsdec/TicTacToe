@@ -5,15 +5,9 @@ import com.alberto.tictactoe.Cell;
 public class CellWeight implements Comparable {
     private Cell cell;
     private Integer weight;
-
     private String symbol;
 
-    public CellWeight(Cell cell, Integer weight) {
-        this.cell = cell;
-        this.weight = weight;
-    }
-
-    public CellWeight(Cell cell, Integer weight, String symbol) {
+    public CellWeight(final Cell cell, final Integer weight, final String symbol) {
         this.cell = cell;
         this.weight = weight;
         this.symbol = symbol;
@@ -32,7 +26,7 @@ public class CellWeight implements Comparable {
     }
 
     @Override
-    public int compareTo(Object otherCellWeight) {
+    public int compareTo(final Object otherCellWeight) {
         if (canCompareWIth(otherCellWeight))
             return this.getWeight().compareTo(((CellWeight) otherCellWeight).getWeight());
         return 1;

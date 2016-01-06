@@ -9,12 +9,12 @@ public class NewGameButtonListener implements ActionListener {
 
     private Board board;
 
-    public NewGameButtonListener(Board board) {
+    public NewGameButtonListener(final Board board) {
         this.board = board;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         board.restartBoard();
     }
 }

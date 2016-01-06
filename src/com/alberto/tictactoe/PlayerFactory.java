@@ -11,18 +11,17 @@ public class PlayerFactory {
 
     }
 
-    private static Player getAllowedPlayer(String symbol) {
+    private static Player getAllowedPlayer(final String symbol) {
         if (isXSymbol(symbol))
             return getXPlayer();
-        else
-            return getOPlayer();
+        return getOPlayer();
     }
 
-    private static boolean isOSymbol(String symbol) {
+    private static boolean isOSymbol(final String symbol) {
         return symbol.equalsIgnoreCase("O");
     }
 
-    private static boolean isXSymbol(String symbol) {
+    private static boolean isXSymbol(final String symbol) {
         return symbol.equalsIgnoreCase("X");
     }
 

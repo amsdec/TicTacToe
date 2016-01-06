@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class OneVsOneActionListener implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
 
         closeMenu(e);
         showBoard();
@@ -20,7 +20,7 @@ public class OneVsOneActionListener implements ActionListener {
         showBoard(board);
     }
 
-    private void showBoard(Board board) {
+    private void showBoard(final Board board) {
         JFrame frame = new JFrame("Tic tac toe");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(board);
@@ -28,7 +28,7 @@ public class OneVsOneActionListener implements ActionListener {
         frame.setVisible(true);
     }
 
-    private void closeMenu(ActionEvent e) {
+    private void closeMenu(final ActionEvent e) {
         ((JFrame) ((JButton) e.getSource()).getRootPane().getParent()).dispose();
     }
 }
