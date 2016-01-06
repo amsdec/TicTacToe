@@ -9,23 +9,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class MinimaxStrategy implements NextPlayEvaluator{
-    public AbstractGrid grid;
-
-    public MinimaxStrategy() {
-    }
 
     @Override
     public Cell getBestCellToPlay(String symbol, AbstractGrid grid) {
-        System.out.println("Se va a buscar el mejor tiro para el jugador " + symbol + " en el estado de juego ");
-        System.out.println(grid);
         List<Cell> emptyCells = this.getEmptyCells(grid);
         List<CellWeight> cellWeights = new ArrayList<CellWeight>();
         for (Cell emptyCell : emptyCells) {
-            System.out.println("Una posible tirada es en " + emptyCell);
             cellWeights.add(new CellWeight(emptyCell, getScore(grid, symbol, emptyCell), symbol));
         }
-        System.out.println("De entre " + cellWeights + " se va a escoger el que convenga para " + symbol);
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
         if (symbol.equals("O")) {
             return Collections.max(cellWeights).getCell();
         } else {
@@ -34,13 +25,8 @@ public class MinimaxStrategy implements NextPlayEvaluator{
     }
 
     public int getScore(AbstractGrid grid, String symbol, Cell cell) {
-        System.out.println("Se va a obtener el score de " + symbol + " tirando en " + cell + " en el estado de juego");
-        //System.out.println(grid);
         AbstractGrid nextGrid = getNextGrid(grid, cell, symbol);
-        //System.out.println("Haciendo el movimiento el grid quedaría así");
-        System.out.println(nextGrid);
         Integer score = getScore(nextGrid);
-        System.out.println("Y el score sería " + score);
         if (score != null) {
             return score;
         } else {
@@ -49,16 +35,10 @@ public class MinimaxStrategy implements NextPlayEvaluator{
             for (Cell emptyCell : emptyCells) {
                 cellWeights.add(new CellWeight(emptyCell, getScore(nextGrid, symbol.equals("X") ? "O" : "X", emptyCell), symbol.equals("X") ? "O" : "X"));
             }
-            System.out.println("En el estado");
-            System.out.println(nextGrid);
-            System.out.println("De entre " + cellWeights + " se va a escoger el que convenga para " + (symbol.equals("X") ? "O" : "X"));
-            System.out.println("----------------------------------------------------------");
             if (cellWeights.size() > 0) {
                 if (cellWeights.get(0).getSymbol().equals("O")) {
-                    System.out.println("Y es " + Collections.max(cellWeights).getCell());
                     return Collections.max(cellWeights).getWeight();
                 } else {
-                    System.out.println("Y es " + Collections.min(cellWeights).getCell());
                     return Collections.min(cellWeights).getWeight();
                 }
             } else {
